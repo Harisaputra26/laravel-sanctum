@@ -19,17 +19,25 @@ class ProdukController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required|string',
-            'price' => 'required|numeric',
-        ]);
+{
+    $validated = $request->validate([
+        'name' => 'required|string|max:255',
+        'description' => 'required|string',
+        'price' => 'required|numeric',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+    ]);
 
-        Product::create($validated);
-
-        return redirect()->route('products.index')->with('success', 'Product created successfully');
+    // Proses file image jika ada
+    if ($request->hasFile('image')) {
+        $imagePath = $request->file('image')->store('products', 'public');
+        $validated['image'] = $imagePath; // Tambahkan path image ke data yang akan disimpan
     }
+
+    Product::create($validated);
+
+    return redirect()->route('products.index')->with('success', 'Product created successfully');
+}
+
 
     public function edit(Product $product)
     {

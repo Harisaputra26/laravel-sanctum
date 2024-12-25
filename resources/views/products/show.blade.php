@@ -10,20 +10,26 @@
 
 {{-- @section('content') --}}
 <div class="container">
-    <h3>Detail produk</h3>
-
-    <div class="mb-3">
-        <strong>Nama:</strong> {{ $product->name }}
+    <h3>Product Details</h3>
+    <div>
+        <strong>Name:</strong> {{ $product->name }}
     </div>
-    <div class="mb-3">
-        <strong>Deskripsi:</strong> {{ $product->description }}
+    <div>
+        <strong>Description:</strong> {{ $product->description }}
     </div>
-    <div class="mb-3">
-        <strong>Harga:</strong> ${{ $product->price }}
+    <div>
+        <strong>Price:</strong> ${{ $product->price }}
     </div>
-
-    <a href="{{ route('products.index') }}" class="btn btn-secondary">balik Produk List</a>
+    <div>
+        <strong>Image:</strong>
+        @if ($product->image)
+            <img src="{{ asset('storage/' . $product->image) }}" alt="Product Image" style="width: 300px; height: auto;">
+        @else
+            <span>No Image</span>
+        @endif
+    </div>
 </div>
+
 {{-- @endsection --}}
 
 </body>

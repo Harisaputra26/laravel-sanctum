@@ -10,28 +10,39 @@
 
 {{-- @section('content') --}}
 <div class="container">
-    <h3>Products List</h3>
+    <h3 class="my-3">Products List</h3>
 
+    <!-- Flash message untuk notifikasi sukses -->
     @if (session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
         </div>
     @endif
 
-    <a href="{{ route('products.create') }}" class="btn btn-primary mb-3">tambah Product baru</a>
+    <!-- Tombol Tambah Produk Baru -->
+    <a href="{{ route('products.create') }}" class="btn btn-primary mb-3">Tambah Produk Baru</a>
 
+    <!-- Tabel Daftar Produk -->
     <table class="table">
         <thead>
             <tr>
+                <th>Image</th>
                 <th>Name</th>
-                <th>Deskripsi</th>
-                <th>harga</th>
+                <th>Description</th>
+                <th>Price</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($products as $product)
                 <tr>
+                    <td>
+                        @if ($product->image)
+                            <img src="{{ asset('storage/' . $product->image) }}" alt="Product Image" style="width: 100px; height: auto;">
+                        @else
+                            <span>No Image</span>
+                        @endif
+                    </td>
                     <td>{{ $product->name }}</td>
                     <td>{{ $product->description }}</td>
                     <td>{{ $product->price }}</td>
@@ -47,7 +58,10 @@
             @endforeach
         </tbody>
     </table>
+    
 </div>
+
+
 {{-- @endsection --}}
 
 </body>
